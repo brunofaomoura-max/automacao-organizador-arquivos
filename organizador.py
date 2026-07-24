@@ -1,5 +1,14 @@
 import os
 import shutil
+from dotenv import load_dotenv
+import smtplib
+from email.message import EmailMessage
+
+load_dotenv()
+
+email_remetente = os.getenv("EMAIL_REMETENTE")
+email_senha = os.getenv("EMAIL_SENHA")
+email_destinatario = os.getenv("EMAIL_DESTINATARIO")
 
 pasta = input("Digite o caminho da pasta que deseja organizar: ")
 arquivos = os.listdir(pasta)
@@ -48,3 +57,15 @@ with open(caminho_relatorio, "w", encoding="utf-8") as arquivo_relatorio:
         arquivo_relatorio.write(linha + "\n")
 
 print(f"\nRelatorio salvo em: {caminho_relatorio}")
+
+corpo_email = "\n".join(relatorio)
+
+mensagem = EmailMessage()
+mensagem["Subject"] = "Relatorio de organizacao de arquivos"
+mensagem["From"] = email_remetente
+mensagem["To"] = email_destinatario
+mensagem.set_content(f"Segue o relatorio da organizacao:\n\n{corpo_email}")
+with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
+    smtp.login(email_remetente, email_senha)
+    smtp.send_message(mensagem)
+    print("Email enviado com sucesso!")
