@@ -13,16 +13,14 @@ pip install -r requirements.txt
 python organizador.py
 ```
 
-O script vai pedir:
-- O caminho da pasta que você quer organizar
-- O e-mail de destino do relatório
+O script vai pedir o caminho da pasta que você quer organizar. O relatório é gerado dentro dessa mesma pasta e enviado automaticamente por e-mail (as credenciais de e-mail ficam num arquivo `.env`, que não é versionado).
 
 ## O que ele faz
 
 1. Lê todos os arquivos da pasta informada
 2. Identifica a extensão de cada um
-3. Move cada arquivo pra uma subpasta correspondente (`Imagens`, `Documentos`, `Planilhas`, `Outros`)
-4. Gera um relatório (`relatorio.txt`) listando o que foi movido e para onde
+3. Move cada arquivo pra uma subpasta correspondente (`Imagens`, `Documentos`, `Apresentacoes`, `Compactados`, `Instaladores`)
+4. Gera um relatório (`relatorio.txt`) listando o que foi movido e o que ficou sem categoria
 5. Envia esse relatório por e-mail automaticamente
 
 ## Tecnologias
@@ -30,9 +28,11 @@ O script vai pedir:
 - Python 3
 - `os` e `shutil` — leitura e movimentação de arquivos
 - `smtplib` — envio de e-mail
+- `python-dotenv` — leitura segura de credenciais
 
 ## Possíveis melhorias futuras
 
-- Interface gráfica simples
+- Tratamento de erros (arquivos em uso, permissões, etc)
+- Log com data e hora de cada execução
 - Agendamento automático (rodar todo dia, por exemplo)
-- Log mais detalhado, com data e hora de cada execução
+- Interface gráfica simples
